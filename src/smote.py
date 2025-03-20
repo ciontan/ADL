@@ -11,6 +11,7 @@ def apply_smote(input_file="data/processed_data.csv", output_file="data/processe
     print("Class distribution before SMOTE:")
     print(y.value_counts())
     
+    #? Convert string numbers with commas to float, not needed but precautionary
     X = X.applymap(lambda x: float(str(x).replace(',', '')) if isinstance(x, str) and x.replace(',', '').replace('.', '').isdigit() else x)
 
     smote = SMOTE(sampling_strategy=0.5, random_state=42)
