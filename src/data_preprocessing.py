@@ -8,9 +8,10 @@ def gender_to_ones_and_zeros(df):
     df[["Gender"]] = df[["Gender"]].replace({1: 0, 2: 1})
     return df
 
-def load_and_preprocess_data(input_file="data/raw_data.csv", output_file="data/processed_data.csv", normalise=True):
+def load_and_preprocess_data(input_file="data/raw_data.csv", output_file="data/processed_data.csv"):
     """input_file: str, path to the raw data file
-    output_file: str, path to save the processed data file"""
+    output_file: str, path to save the processed data file
+   """
     df = pd.read_csv(input_file)
     
     df.rename(columns={'age': 'Age','gender': 'Gender', 'community': 'Community', 'U-Alb': 'UAlb', 
@@ -52,14 +53,18 @@ def load_and_preprocess_data(input_file="data/raw_data.csv", output_file="data/p
     
     #? Converting 1s and 2s into 0s and 1s in place
     df = gender_to_ones_and_zeros(df)
-    
-        #? Normalising for continuous features
-    if normalise:
-        scaler = StandardScaler()
-        df[continuous_features] = scaler.fit_transform(df[continuous_features])
     df.to_csv(output_file, index=False)
 
     print(f"Processed data saved to {output_file}")
+
+def Class_Split(dataset):
+    """Takes in a dataset and splits it into positive and negative samples,
+    returns positive, negative df"""
+    Positive = dataset[dataset['DR'] == 1].reset_index()
+    Negative = dataset[dataset['DR'] == 0].reset_index()
+    return Positive, Negative
+
+
 
 if __name__ == "__main__":
     load_and_preprocess_data()
