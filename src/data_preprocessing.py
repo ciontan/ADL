@@ -15,7 +15,7 @@ def load_and_preprocess_data(input_file="data/raw_data.csv", output_file="data/p
     
     df.rename(columns={'age': 'Age','gender': 'Gender', 'community': 'Community', 'U-Alb': 'UAlb', 
                    'LDL-C': 'LDLC', 'HDL-C': 'HDLC', 'ACR': 'UACR'}, inplace=True)
-    continuous_features = ['Age', 'UAlb', 'Ucr', 'UACR', 'TC', 'TG', 'TCTG' 'LDLC', 'HDLC', 
+    continuous_features = ['Age', 'UAlb', 'Ucr', 'UACR', 'TC', 'TG', 'TCTG', 'LDLC', 'HDLC', 
                            'Scr', 'BUN', 'FPG', 'HbA1c', 'Height', 'Weight', 'BMI', 'Duration']
     
     #? converting numbers like 1,203.45 to 1203.45
