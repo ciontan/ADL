@@ -65,8 +65,8 @@ class newModel1(nn.Module):
             self.layers = nn.Sequential(*layer_list)
 
     def forward(self, x):
-        self.layers(x)
-        pass
+        return self.layers(x)
+        
 
 class Block_1Layer(nn.Module):
     """
@@ -132,17 +132,15 @@ class modularNN(nn.Module):
         """
         super().__init__()
 
-        if blocks:
+        if blocks and blockSize:
             self.layers = nn.Sequential(
                 *blocks,
                 nn.Linear(blockSize[1],classes),
             )
-
-  
-
+ 
     def forward(self, x):
-        self.layers(x)
-        pass
+        return self.layers(x)
+        
 
 class BlockMaker(nn.Module):
     """
@@ -179,36 +177,11 @@ class BlockMaker(nn.Module):
             print("num of Layers and Modules do not match!")
         except:
             print("Unknown Error")
-        finally:
-            self.layers =  nn.Sequential(
-                *layer_List
-                )
+
+        self.layers =  nn.Sequential(
+            *layer_List
+            )
             
     def forward(self, x):
         return self.layers(x)
-
-
-# na = newModel1(6,outputs=10,
-#                  blocks=[Block_1Layer(128,64),
-#                          Block_1Layer(64,32,dropout=0.2),
-#                          ],
-#                  blockSize=(128,32))
-# print(na)
-# print()
-
-# ne = newModel1(28, outputs=10,
-#                blocks=[BlockMaker(64,[128,512],256,[nn.ReLU(),(nn.Tanh(),nn.Dropout(0.2)),nn.ReLU()]),
-#                        BlockMaker(256,[128,128,128],64,[nn.ReLU(),nn.Tanh(),nn.ReLU(),nn.LeakyReLU()]),
-#                        ],
-#                blockSize=(64,64))
-# print(ne)
-# print()
-
-# ni = modularNN(classes=10,
-#                blocks=[BlockMaker(512,[128],256,[nn.ReLU(),(nn.ELU(),nn.Dropout(0.2))]),
-#                        BlockMaker(256,[128,128],64,[nn.ReLU(),nn.ReLU(),nn.LeakyReLU()]),
-#                        ],
-#                blockSize=(28,64))
-# print(ni)
-# print()
 
