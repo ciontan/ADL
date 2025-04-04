@@ -23,7 +23,36 @@ Activation Fns:
     torch.nn.PReLU
     torch.nn.ELU
 """
+class BasicModel(nn.Module):
+    def __init__(self,inFeatures,hiddens,classes,activations:list):
+        super().__init__()
+        if isinstance(activations,list):
+            assert len(activations) <= len(hiddens)
+        linearList = []
+        start = inFeatures
+        for size in hiddens:
+            linearList.append(nn.Linear(start,size))
+            start = size
 
+        layerList = []
+        for idx in range(len(linearList)):
+            layerList.append(linearList[idx])
+            if isinstance(activations,list):
+                if idx < len(activations):
+                    layerList.append(activations[idx])
+                else:
+                    layerList.append(activations[-1])
+            else:
+                layerList.append(activations)
+        layerList.append(nn.Linear(size,classes))
+        # layerList.append(nn.Sigmoid())
+        self.block = nn.Sequential(
+            *layerList,
+        )
+        
+    def forward(self, x):
+        return self.block(x)
+    
 class newModel1(nn.Module):
     """
     ALOHA
