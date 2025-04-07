@@ -4,8 +4,7 @@ class FocalLoss(nn.Module):
     """
     The alpha parameter adjusts the weight for the minority class.
     The gamma parameter adjusts how much to focus on hard examples (higher values will focus more on adifficult-to-classify samples).
-    
-    criterion = FocalLoss(alpha=0.25, gamma=2.0).to(device) 
+
     """
     def __init__(self, alpha=0.25, gamma=2.0):
         super(FocalLoss, self).__init__()
@@ -21,11 +20,10 @@ class FocalLoss(nn.Module):
 class DiceLoss(nn.Module):
     """
     Dice loss is a metric commonly used for imbalanced datasets, especially in segmentation tasks. It measures the overlap between the predicted and true classes. While it’s more often used in segmentation, it can be adapted for binary classification tasks.
-    
-    criterion = DiceLoss().to(device) 
+ 
     """
     def __init__(self, smooth=1e-6):
-        super(DiceLoss, self).__init__()
+        super().__init__()
         self.smooth = smooth
 
     def forward(self, inputs, targets):
